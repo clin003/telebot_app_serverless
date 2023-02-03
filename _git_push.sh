@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.0.1
+VERSION=0.0.2
 APPNAME=telebot_app_serverless
 echo "package baicai" > ./baicai/version.go
 echo "const(APP_NAME = \"${APPNAME}\"" >> ./baicai/version.go
@@ -8,13 +8,13 @@ echo "APP_VERSION = \"${VERSION}\")" >> ./baicai/version.go
 go fmt ./baicai
 
 
-git init #
+#git init #
 git add .
 git commit -m "v${VERSION} debug"
 #git remote add gitee git@gitee.com:lyhuilin/${APPNAME}.git #
-git remote add github git@github.com:clin003/${APPNAME}.git #
-git branch -M main #
-#git push -u gitee main
+#git remote add github git@github.com:clin003/${APPNAME}.git #
+#git branch -M main #
+git push -u gitee main
 git push -u github main
 
 git tag "v${VERSION}"
