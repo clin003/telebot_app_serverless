@@ -1,6 +1,6 @@
 A serverless Telegram bot
 
-# Baicai DevBot
+# Baicai TGBot
 
 A Telegram bot
 
