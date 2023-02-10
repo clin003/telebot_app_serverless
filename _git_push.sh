@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.0.3
+VERSION=0.0.5
 APPNAME=telebot_app_serverless
 echo "package baicai" > ./baicai/version.go
 echo "const(APP_NAME = \"${APPNAME}\"" >> ./baicai/version.go
@@ -19,5 +19,5 @@ git push -u github main
 
 git tag "v${VERSION}"
 git push --tags  -u github main
-# git push --tags  -u gitee main
+git push --tags  -u gitee main
 # git remote -v
