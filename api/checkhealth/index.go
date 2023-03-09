@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/clin003/tgbot_app_dev/common"
@@ -47,6 +48,10 @@ func autoSend() error {
 		return err
 	}
 	botVideoAPI := os.Getenv("BAICAI_BOT_VIDEO_API")
+	if len(botVideoAPI) <= 0 || !strings.HasPrefix(botVideoAPI, "http") {
+		err := fmt.Errorf("BAICAI_BOT_VIDEO_API Is NULL")
+		return err
+	}
 	botVideoAPI = botVideoAPI + "?_t=" + fmt.Sprintf("%d", time.Now().UnixNano()/1e6) //13位时间戳
 	log.Println(botVideoAPI)
 	caption := os.Getenv("BAICAI_BOT_TELEGRAM_AUTOSEND_CAPTION")
