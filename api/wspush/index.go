@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/clin003/tgbot_app_dev/utils"
+
 	"github.com/clin003/tgbot_app_dev/common"
 	"github.com/clin003/tgbot_app_dev/features"
 	_ "github.com/clin003/tgbot_app_dev/main/distro/all"
@@ -80,8 +82,21 @@ func PushMsgData(botToken string, data []byte) error {
 			msg.Image.PicURL = ""
 		}
 	}
+	if len(msg.Text.Content) > 0 {
+		if !feedKeyworldCheckEx() {
+			return
+		}
+	}
 
 	return pushMsgDataToTelegram(botToken, msg)
+}
+
+func feedKeyworldCheckEx(botToken, msgText string) bool {
+	feedKeyworldList := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_LIST_" + botToken)
+	feedKeyworldFilter := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_FILTER_" + botToken)
+	k, f, ok := utils.KeyworldCheck(msgText, feedKeyworldFilter, feedKeyworldList)
+	log.Printf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t)", k, f, ok)
+	return ok
 }
 
 func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
@@ -220,3 +235,35 @@ func (msg *FeedRichMsgModel) ToString() (res string) {
 
 	return
 }
+
+// func feedKeyworldCheck(msgText string) (retText, retFilter string, retBool bool) {
+// 	retBool = true
+
+// 	keyworldFilter := utils.KeyworldListParse(getFeedKeyworldFilter())
+// 	for _, v := range keyworldFilter {
+// 		vc := v
+// 		if strings.Contains(msgText, vc) {
+// 			retFilter = vc
+// 			retBool = false
+// 			return
+// 		}
+// 	}
+
+// 	keyworldList := utils.KeyworldListParse(getFeedKeyworldList())
+// 	if len(keyworldList) <= 0 {
+// 		retText = "无订阅词限定"
+// 		retBool = true
+// 		return
+// 	} else {
+// 		retBool = false
+// 	}
+// 	for _, v := range keyworldList {
+// 		vc := v
+// 		if strings.Contains(msgText, vc) {
+// 			retText = vc
+// 			retBool = true
+// 			return
+// 		}
+// 	}
+// 	return
+// }
