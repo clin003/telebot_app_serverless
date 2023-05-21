@@ -92,8 +92,8 @@ func PushMsgData(botToken string, data []byte) error {
 }
 
 func feedKeyworldCheckEx(botToken, msgText string) error {
-	feedKeyworldList := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_LIST_" + botToken)
-	feedKeyworldFilter := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_FILTER_" + botToken)
+	feedKeyworldList := os.Getenv("BAICAI_WSPUSH_FEED_KEYWORLD_LIST_" + botToken)
+	feedKeyworldFilter := os.Getenv("BAICAI_WSPUSH_FEED_KEYWORLD_FILTER_" + botToken)
 	k, f, ok := utils.FeedKeyworldCheck(msgText, feedKeyworldFilter, feedKeyworldList)
 	if !ok {
 		return fmt.Errorf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t) ", k, f, ok)
