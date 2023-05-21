@@ -22,10 +22,10 @@ func KeyworldListParse(keyworldListStr string) []string {
 }
 
 // 检查屏蔽关键词，关键词，存在屏蔽词(keyworldFilter) 返回false，存在订阅关键词(keyworldList)或无订阅关键词词 返回true
-func KeyworldCheck(msgText, keyworldFilter, keyworldList string) (retText, retFilter string, retBool bool) {
+func FeedKeyworldCheck(msgText, feedKeyworldFilter, feedKeyworldList string) (retText, retFilter string, retBool bool) {
 	retBool = true
 
-	keyworldFilter := KeyworldListParse(keyworldFilter)
+	keyworldFilter := KeyworldListParse(feedKeyworldFilter)
 	for _, v := range keyworldFilter {
 		vc := v
 		if strings.Contains(msgText, vc) {
@@ -35,7 +35,7 @@ func KeyworldCheck(msgText, keyworldFilter, keyworldList string) (retText, retFi
 		}
 	}
 
-	keyworldList := KeyworldListParse(keyworldList)
+	keyworldList := KeyworldListParse(feedKeyworldList)
 	if len(keyworldList) <= 0 {
 		retText = "无订阅词限定"
 		retBool = true
