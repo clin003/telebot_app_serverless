@@ -83,20 +83,24 @@ func PushMsgData(botToken string, data []byte) error {
 		}
 	}
 	if len(msg.Text.Content) > 0 {
-		if !feedKeyworldCheckEx() {
-			return
+		if err := feedKeyworldCheckEx(); err != nil {
+			return err
 		}
 	}
 
 	return pushMsgDataToTelegram(botToken, msg)
 }
 
-func feedKeyworldCheckEx(botToken, msgText string) bool {
+func feedKeyworldCheckEx(botToken, msgText string) error {
 	feedKeyworldList := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_LIST_" + botToken)
 	feedKeyworldFilter := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_KEYWORLD_FILTER_" + botToken)
 	k, f, ok := utils.KeyworldCheck(msgText, feedKeyworldFilter, feedKeyworldList)
-	log.Printf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t)", k, f, ok)
-	return ok
+	if !ok {
+		return fmt.Errorf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t) ", k, f, ok)
+	}
+	return nil
+	// log.Printf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t)", k, f, ok)
+	// return ok
 }
 
 func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
