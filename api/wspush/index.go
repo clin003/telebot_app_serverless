@@ -86,6 +86,7 @@ func PushMsgData(botToken string, data []byte) error {
 		if err := feedKeyworldCheckEx(botToken, msg.Text.Content); err != nil {
 			return err
 		}
+		msg.Text.Content = feedKeyworldReplaceEx(botToken, msg.Text.Content)
 	}
 
 	return pushMsgDataToTelegram(botToken, msg)
@@ -101,6 +102,12 @@ func feedKeyworldCheckEx(botToken, msgText string) error {
 	return nil
 	// log.Printf("关键词检查: 订阅词(%s) 屏蔽词(%s) 结果(%t)", k, f, ok)
 	// return ok
+}
+
+// 关键词替换
+func feedKeyworldReplaceEx(botToken, msgText string) string {
+	feedKeyworldReplace := os.Getenv("BAICAI_WSPUSH_FEED_KEYWORLD_REPLACE_" + botToken)
+	return utils.FeedKeyworldReplace(msgText, feedKeyworldReplace)
 }
 
 func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
