@@ -13,6 +13,7 @@ import (
 
 func OnVideo(c tele.Context) error {
 	botVideoAPI := os.Getenv("BAICAI_BOT_VIDEO_API")
+	botVideoCaption := os.Getenv("BAICAI_BOT_VIDEO_CAPTION")
 	botVideoAPI = botVideoAPI + "?_t=" + fmt.Sprintf("%d", time.Now().UnixNano()/1e6) //13位时间戳
 	log.Println(botVideoAPI)
 
@@ -38,6 +39,10 @@ func OnVideo(c tele.Context) error {
 		botVideoAPI = botVideoAPI + "1"
 		m := new(tele.Video)
 		m.File = tele.FromURL(botVideoAPI)
+		if len(botVideoCaption) > 0 {
+			m.Caption = botVideoCaption
+			return c.Send(m, tele.ModeMarkdown)
+		}
 		return c.Send(m)
 	} else {
 		return nil
