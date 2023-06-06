@@ -38,11 +38,11 @@ func OnVideo(c tele.Context) error {
 	if len(botVideoCaption) > 0 {
 		m.Caption = botVideoCaption
 	}
-	if err := c.Send(m, tele.ModeMarkdown); err != nil {
+	if err := c.Send(m, tele.ModeMarkdownV2); err != nil {
 		botVideoAPI = botVideoAPI + "1"
 		m := new(tele.Video)
 		m.File = tele.FromURL(botVideoAPI)
-		return c.Send(m, tele.ModeMarkdown)
+		return c.Send(m, tele.ModeMarkdownV2)
 	} else {
 		return nil
 	}
