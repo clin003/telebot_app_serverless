@@ -69,7 +69,7 @@ func SendMessage(reciverId int64, m interface{}) error {
 		ID: reciverId, //int64(reciverId),
 	}
 
-	if _, err := bot.Send(reciver, m); err != nil {
+	if _, err := bot.Send(reciver, m, tele.ModeMarkdown); err != nil {
 		log.Printf("Send(%d,%v) Msg Error: %v", reciverId, m, err)
 		return errors.New("send message failed,")
 	}
