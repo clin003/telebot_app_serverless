@@ -41,5 +41,8 @@ BAICAI_WSPUSH_FEED_KEYWORLD_REPLACE_**=
 
 交流TG群： @baicai_dev
 
-##  感谢
 
+## 赞赏
+![赞赏白菜林，多少不重要，1元也是支持](https://cdn.jsdelivr.net/gh/clin003/cdn/assets/images/zanalipay.jpg)
+
+![赞赏白菜林，多少不重要，1元也是支持](https://cdn.jsdelivr.net/gh/clin003/cdn/assets/images/zanweixin.jpg)
