@@ -1,14 +1,14 @@
 package text
 
 import (
-	"fmt"
+	// "fmt"
 	"os"
 
 	"github.com/clin003/tgbot_app_dev/features"
 	tele "gopkg.in/telebot.v3"
 )
 
-var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn1Url string
+var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn2Url string
 
 func init() {
 	features.RegisterFeature(tele.OnText, OnChannelLinkGroup)
@@ -17,7 +17,7 @@ func init() {
 	replyBtn1Text = os.Getenv("BAICAI_BOT_REPLY_BTN1_TEXT")
 	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN1_URL")
 	replyBtn2Text = os.Getenv("BAICAI_BOT_REPLY_BTN2_TEXT")
-	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN2_URL")
+	replyBtn2Url = os.Getenv("BAICAI_BOT_REPLY_BTN2_URL")
 }
 
 // Command: /start <PAYLOAD>

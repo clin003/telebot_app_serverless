@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.1.16
+VERSION=0.1.17
 APPNAME=telebot_app_serverless
 echo "package baicai" > ./baicai/version.go
 echo "const(APP_NAME = \"${APPNAME}\"" >> ./baicai/version.go
