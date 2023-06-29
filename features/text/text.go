@@ -17,7 +17,7 @@ func OnText(c tele.Context) error {
 		return nil
 	}
 	fmt.Println("OnText", 1)
-	if c.Message().OriginalChat != nil {
+	if !(c.Message().OriginalChat != nil) {
 		return nil
 	}
 	fmt.Println("OnText", 2)
