@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/clin003/tgbot_app_dev/features"
-
 	tele "gopkg.in/telebot.v3"
 )
 
