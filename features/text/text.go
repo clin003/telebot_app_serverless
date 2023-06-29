@@ -2,34 +2,47 @@ package text
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/clin003/tgbot_app_dev/features"
 
 	tele "gopkg.in/telebot.v3"
 )
 
+var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn1Url string
+
+func init() {
+	features.RegisterFeature(tele.OnText, OnChannelLinkGroup)
+
+	replyText = os.Getenv("BAICAI_BOT_REPLY_TEXT")
+	replyBtn1Text = os.Getenv("BAICAI_BOT_REPLY_BTN1_TEXT")
+	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN1_URL")
+	replyBtn2Text = os.Getenv("BAICAI_BOT_REPLY_BTN2_TEXT")
+	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN2_URL")
+}
+
 // Command: /start <PAYLOAD>
 func OnChannelLinkGroup(c tele.Context) error {
 	if len(replyText) <= 0 {
 		return nil
 	}
-	fmt.Println("OnChannelLinkGroup", 0)
+	// fmt.Println("OnChannelLinkGroup", 0)
 	if c.Message().Private() ||
 		c.Message().FromChannel() ||
 		c.Message().IsReply() {
 		return nil
 	}
-	fmt.Println("OnChannelLinkGroup", 1)
+	// fmt.Println("OnChannelLinkGroup", 1)
 	if !(c.Message().OriginalChat != nil) || !(c.Message().SenderChat != nil) {
 		return nil
 	}
-	fmt.Println("OnChannelLinkGroup", 2)
+	// fmt.Println("OnChannelLinkGroup", 2)
 	if c.Message().OriginalChat.Type != tele.ChatChannel ||
 		c.Message().SenderChat.Type != tele.ChatChannel ||
 		!c.Message().FromGroup() {
 		return nil
 	}
-	fmt.Println("OnChannelLinkGroup", 3)
+	// fmt.Println("OnChannelLinkGroup", 3)
 	// menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 	// btn1 := menu.URL("薅羊毛📦", "https://t.me/haowu_push")
 	// btn2 := menu.URL("值得买🔥", "https://t.me/haowu_dw")
@@ -61,16 +74,4 @@ func OnChannelLinkGroup(c tele.Context) error {
 	// c.Reply("评论区请友好👬发言selector", selector)
 	// c.Reply("评论区请友好👬发言menu", menu)
 	return c.Reply(replyText, selector)
-}
-
-var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn1Url string
-
-func init() {
-	features.RegisterFeature(tele.OnText, OnChannelLinkGroup)
-
-	replyText = os.Getenv("BAICAI_BOT_REPLY_TEXT")
-	replyBtn1Text = os.Getenv("BAICAI_BOT_REPLY_BTN1_TEXT")
-	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN1_URL")
-	replyBtn2Text = os.Getenv("BAICAI_BOT_REPLY_BTN2_TEXT")
-	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN2_URL")
 }
