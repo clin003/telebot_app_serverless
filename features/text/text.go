@@ -13,15 +13,20 @@ func OnText(c tele.Context) error {
 	fmt.Println("OnText", 0)
 	if c.Message().Private() ||
 		c.Message().FromChannel() ||
-		c.Message().IsReply() ||
-		c.Message().IsForwarded() {
+		c.Message().IsReply() {
 		return nil
 	}
 	fmt.Println("OnText", 1)
-	if c.Message().SenderChat.Type != tele.ChatChannel || c.Message().FromGroup() {
+	if c.Message().OriginalChat != nil {
 		return nil
 	}
 	fmt.Println("OnText", 2)
+	if c.Message().OriginalChat.Type != tele.ChatChannel ||
+		c.Message().SenderChat.Type != tele.ChatChannel ||
+		c.Message().FromGroup() {
+		return nil
+	}
+	fmt.Println("OnText", 3)
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 	btn1 := menu.URL("薅羊毛📦", "https://t.me/haowu_push")
 	btn2 := menu.URL("值得买🔥", "https://t.me/haowu_dw")
