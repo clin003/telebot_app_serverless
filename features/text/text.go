@@ -1,8 +1,6 @@
 package text
 
 import (
-	"fmt"
-
 	"github.com/clin003/tgbot_app_dev/features"
 
 	tele "gopkg.in/telebot.v3"
