@@ -1,4 +1,4 @@
-package text
+package autoreply
 
 import (
 	// "fmt"
@@ -12,6 +12,9 @@ var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn2Url string
 
 func init() {
 	features.RegisterFeature(tele.OnText, OnChannelLinkGroup)
+	features.RegisterFeature(tele.OnPhoto, OnChannelLinkGroup)
+	features.RegisterFeature(tele.OnVideo, OnChannelLinkGroup)
+	features.RegisterFeature(tele.OnMedia, OnChannelLinkGroup)
 
 	replyText = os.Getenv("BAICAI_BOT_REPLY_TEXT")
 	replyBtn1Text = os.Getenv("BAICAI_BOT_REPLY_BTN1_TEXT")

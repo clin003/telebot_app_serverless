@@ -8,5 +8,5 @@ import (
 	_ "github.com/clin003/tgbot_app_dev/features/start"
 	_ "github.com/clin003/tgbot_app_dev/features/video"
 
-	_ "github.com/clin003/tgbot_app_dev/features/text"
+	_ "github.com/clin003/tgbot_app_dev/features/autoreply"
 )
