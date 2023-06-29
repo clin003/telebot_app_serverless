@@ -34,7 +34,15 @@ func OnText(c tele.Context) error {
 		menu.Row(btn1),
 		menu.Row(btn2),
 	)
-
+	selector := &tele.ReplyMarkup{}
+	btnPrev := selector.URL("薅羊毛📦", "https://t.me/haowu_push")
+	btnNext := selector.URL("值得买🔥", "https://t.me/haowu_dw")
+	selector.Inline(
+		selector.Row(btnPrev, btnNext),
+	)
+	c.Reply("评论区请友好👬发言selector", selector)
+	c.Reply("评论区请友好👬发言menu", menu)
+	menu.ResizeKeyboard = false
 	return c.Reply("评论区请友好👬发言", menu)
 }
 
