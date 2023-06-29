@@ -17,13 +17,13 @@ func OnText(c tele.Context) error {
 		return nil
 	}
 	fmt.Println("OnText", 1)
-	if !(c.Message().OriginalChat != nil) {
+	if !(c.Message().OriginalChat != nil) || !(c.Message().SenderChat != nil) {
 		return nil
 	}
 	fmt.Println("OnText", 2)
 	if c.Message().OriginalChat.Type != tele.ChatChannel ||
 		c.Message().SenderChat.Type != tele.ChatChannel ||
-		c.Message().FromGroup() {
+		!c.Message().FromGroup() {
 		return nil
 	}
 	fmt.Println("OnText", 3)
