@@ -49,11 +49,12 @@ func OnChannelLinkGroup(c tele.Context) error {
 	msgId := ""
 	if len(c.Message().AlbumID) > 0 {
 		msgId = fmt.Sprintf("%d_%s", c.Message().Chat.ID, c.Message().AlbumID)
-	} else if c.Message().OriginalUnixtime > 0 {
-		msgId = msgId + fmt.Sprintf("%d_%d", c.Message().Chat.ID, c.Message().OriginalUnixtime)
 	} else { // c.Message().ID > 0
 		msgId = msgId + fmt.Sprintf("%d_%d", c.Message().Chat.ID, c.Message().ID)
 	}
+	// else if c.Message().OriginalUnixtime > 0 {
+	// 	msgId = msgId + fmt.Sprintf("%d_%d", c.Message().Chat.ID, c.Message().OriginalUnixtime)
+	// }
 	// else {
 	// 	msgId = msgId + fmt.Sprintf("%d", c.Update().ID)
 	// }
