@@ -1,6 +1,9 @@
 package autoreply
 
 import (
+	"fmt"
+	"sync"
+
 	// "fmt"
 	"os"
 
@@ -9,6 +12,7 @@ import (
 )
 
 var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn2Url string
+var syncMap sync.Map
 
 func init() {
 	features.RegisterFeature(tele.OnText, OnChannelLinkGroup)
@@ -43,6 +47,19 @@ func OnChannelLinkGroup(c tele.Context) error {
 		c.Message().SenderChat.Type != tele.ChatChannel ||
 		!c.Message().FromGroup() {
 		return nil
+	}
+	msgId := ""
+	if len(c.Message().AlbumID) > 0 {
+		msgId = c.Message().AlbumID
+	} else if c.Message().OriginalUnixtime > 0 {
+		msgId = msgId + fmt.Sprintf("%d", c.Message().OriginalUnixtime)
+	} else if c.Message().ID > 0 {
+		msgId = msgId + fmt.Sprintf("%d_%d", c.Message().Chat.ID, c.Message().ID)
+	} else {
+		msgId = msgId + fmt.Sprintf("%d", c.Update().ID)
+	}
+	if _, ok := syncMap.LoadOrStore(msgId, ""); ok {
+		return
 	}
 	// fmt.Println("OnChannelLinkGroup", 3)
 	// menu := &tele.ReplyMarkup{ResizeKeyboard: true}
