@@ -59,7 +59,7 @@ func OnChannelLinkGroup(c tele.Context) error {
 		msgId = msgId + fmt.Sprintf("%d", c.Update().ID)
 	}
 	if _, ok := syncMap.LoadOrStore(msgId, ""); ok {
-		return
+		return nil
 	}
 	// fmt.Println("OnChannelLinkGroup", 3)
 	// menu := &tele.ReplyMarkup{ResizeKeyboard: true}
