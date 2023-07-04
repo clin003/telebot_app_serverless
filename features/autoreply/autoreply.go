@@ -77,23 +77,23 @@ func OnChannelLinkGroup(c tele.Context) error {
 		replyBtn1Text = "薅羊毛📦"
 		replyBtn1Url = "https://t.me/haowu_push"
 	}
+	btnPrev := selector.URL(replyBtn1Text, replyBtn1Url)
+	btnList = append(btnList, btnPrev)
 
 	if len(replyBtn2Text) <= 0 || len(replyBtn2Url) <= 0 {
 		replyBtn2Text = "值得买🔥"
 		replyBtn2Url = "https://t.me/haowu_dw"
 	}
-
-	if len(replyBtn3Text) == 0 || len(replyBtn3Url) == 0 {
-		replyBtn3Text = "唯品会💃"
-		replyBtn3Url = "https://t.me/haowu_vip"
-	}
-
-	btnPrev := selector.URL(replyBtn1Text, replyBtn1Url)
-	btnList = append(btnList, btnPrev)
 	btnNext := selector.URL(replyBtn2Text, replyBtn2Url)
 	btnList = append(btnList, btnNext)
-	btn3 := selector.URL(replyBtn3Text, replyBtn3Url)
-	btnList = append(btnList, btn3)
+
+	if len(replyBtn3Text) > 0 && len(replyBtn3Url) > 0 {
+		// replyBtn3Text = "唯品会💃"
+		// replyBtn3Url = "https://t.me/haowu_vip"
+		btn3 := selector.URL(replyBtn3Text, replyBtn3Url)
+		btnList = append(btnList, btn3)
+	}
+
 	selector.Inline(
 		selector.Row(
 			btnList...,
