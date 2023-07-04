@@ -72,6 +72,7 @@ func OnChannelLinkGroup(c tele.Context) error {
 	// 	menu.Row(btn2),
 	// )
 	selector := &tele.ReplyMarkup{}
+	btnList := make([]tele.Btn, 0)
 	if len(replyBtn1Text) <= 0 || len(replyBtn1Url) <= 0 {
 		replyBtn1Text = "薅羊毛📦"
 		replyBtn1Url = "https://t.me/haowu_push"
@@ -83,18 +84,22 @@ func OnChannelLinkGroup(c tele.Context) error {
 	}
 
 	if len(replyBtn3Text) == 0 || len(replyBtn3Url) == 0 {
-		replyBtn3Text = "大牌特卖💃"
+		replyBtn3Text = "唯品会💃"
 		replyBtn3Url = "https://t.me/haowu_vip"
 	}
 
 	btnPrev := selector.URL(replyBtn1Text, replyBtn1Url)
+	btnList = append(btnList, btnPrev)
 	btnNext := selector.URL(replyBtn2Text, replyBtn2Url)
+	btnList = append(btnList, btnNext)
 	btn3 := selector.URL(replyBtn3Text, replyBtn3Url)
+	btnList = append(btnList, btn3)
 	selector.Inline(
 		selector.Row(
-			btnPrev,
-			btnNext,
-			btn3,
+			btnList...,
+		// btnPrev,
+		// btnNext,
+		// btn3,
 		),
 	)
 	// c.Reply("评论区请友好👬发言selector", selector)
