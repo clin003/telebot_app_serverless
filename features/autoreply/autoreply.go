@@ -9,7 +9,7 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
-var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn2Url string
+var replyText, replyBtn1Text, replyBtn1Url, replyBtn2Text, replyBtn2Url, replyBtn3Text, replyBtn3Url string
 var syncMap sync.Map
 
 func init() {
@@ -23,6 +23,8 @@ func init() {
 	replyBtn1Url = os.Getenv("BAICAI_BOT_REPLY_BTN1_URL")
 	replyBtn2Text = os.Getenv("BAICAI_BOT_REPLY_BTN2_TEXT")
 	replyBtn2Url = os.Getenv("BAICAI_BOT_REPLY_BTN2_URL")
+	replyBtn3Text = os.Getenv("BAICAI_BOT_REPLY_BTN3_TEXT")
+	replyBtn3Url = os.Getenv("BAICAI_BOT_REPLY_BTN3_URL")
 }
 
 // Command: /start <PAYLOAD>
@@ -70,24 +72,29 @@ func OnChannelLinkGroup(c tele.Context) error {
 	// 	menu.Row(btn2),
 	// )
 	selector := &tele.ReplyMarkup{}
-	if len(replyBtn1Text) <= 0 {
+	if len(replyBtn1Text) <= 0 || len(replyBtn1Url) <= 0 {
 		replyBtn1Text = "薅羊毛📦"
-	}
-	if len(replyBtn1Url) <= 0 {
 		replyBtn1Url = "https://t.me/haowu_push"
 	}
-	if len(replyBtn2Text) <= 0 {
+
+	if len(replyBtn2Text) <= 0 || len(replyBtn2Url) <= 0 {
 		replyBtn2Text = "值得买🔥"
-	}
-	if len(replyBtn2Url) <= 0 {
 		replyBtn2Url = "https://t.me/haowu_dw"
 	}
+
+	if len(replyBtn3Text) == 0 || len(replyBtn3Url) == 0 {
+		replyBtn3Text = "大牌特卖💃"
+		replyBtn3Url = "https://t.me/haowu_vip"
+	}
+
 	btnPrev := selector.URL(replyBtn1Text, replyBtn1Url)
 	btnNext := selector.URL(replyBtn2Text, replyBtn2Url)
+	btn3 := selector.URL(replyBtn3Text, replyBtn3Url)
 	selector.Inline(
 		selector.Row(
 			btnPrev,
 			btnNext,
+			btn3,
 		),
 	)
 	// c.Reply("评论区请友好👬发言selector", selector)
