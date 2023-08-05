@@ -131,7 +131,7 @@ func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
 	switch msg.Msgtype {
 	case "text":
 		m := msg.Text.Content
-		return SendMessage(reciverId, m)
+		return SendMessage(reciverId, m, tele.ModeDefault)
 	case "video":
 		m := new(tele.Video)
 		m.File = tele.FromURL(msg.Video.FileURL)
@@ -193,7 +193,7 @@ func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
 		}
 		if len(msg.Text.Content) > 0 {
 			m := msg.Text.Content
-			return SendMessage(reciverId, m)
+			return SendMessage(reciverId, m, tele.ModeDefault)
 		}
 		return nil
 	default:
