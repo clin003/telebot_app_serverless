@@ -213,12 +213,12 @@ func init() {
 	features.Handle(bot)
 }
 
-func SendMessage(reciverId int64, m interface{}, opts ...interface{}) error {
+func SendMessage(reciverId int64, m interface{}, parseMode tele.ParseMode) error {
 	reciver := &tele.User{
 		ID: reciverId, //int64(reciverId),
 	}
 
-	if _, err := bot.Send(reciver, m, opts); err != nil {
+	if _, err := bot.Send(reciver, m, parseMode); err != nil {
 		log.Printf("Send(%d,%v) Msg Error: %v", reciverId, m, err)
 		return errors.New("send message failed,")
 	}
