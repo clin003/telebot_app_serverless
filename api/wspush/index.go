@@ -11,11 +11,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/clin003/tgbot_app_dev/utils"
-
+	"gitee.com/lyhuilin/util"
 	"github.com/clin003/tgbot_app_dev/common"
 	"github.com/clin003/tgbot_app_dev/features"
 	_ "github.com/clin003/tgbot_app_dev/main/distro/all"
+	"github.com/clin003/tgbot_app_dev/utils"
 
 	tele "gopkg.in/telebot.v3"
 )
@@ -138,38 +138,62 @@ func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
 		if len(msg.Video.Caption) > 0 {
 			m.Caption = msg.Video.Caption
 		}
-		return SendMessage(reciverId, m)
+		if len(m.Caption) > 0 {
+			if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+			} else {
+				m.Caption = captionTmp
+			}
+		}
+		return SendMessage(reciverId, m, tele.ModeHTML)
 	case "image":
 		m := new(tele.Photo)
 		m.File = tele.FromURL(msg.Image.PicURL)
 		if len(msg.Image.Caption) > 0 {
 			m.Caption = msg.Image.Caption
 		}
-		return SendMessage(reciverId, m)
+		if len(m.Caption) > 0 {
+			if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+			} else {
+				m.Caption = captionTmp
+			}
+		}
+		return SendMessage(reciverId, m, tele.ModeHTML)
 	case "rich":
 		if len(msg.Image.PicURL) > 0 && strings.HasPrefix(msg.Image.PicURL, "http") {
-			mm := new(tele.Photo)
-			mm.File = tele.FromURL(msg.Image.PicURL)
+			m := new(tele.Photo)
+			m.File = tele.FromURL(msg.Image.PicURL)
 			if len(msg.Image.Caption) > 0 {
-				mm.Caption = msg.Image.Caption
+				m.Caption = msg.Image.Caption
 			} else if len(msg.Text.Content) > 0 {
-				mm.Caption = msg.Text.Content
+				m.Caption = msg.Text.Content
 			}
-			return SendMessage(reciverId, mm)
+			if len(m.Caption) > 0 {
+				if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+				} else {
+					m.Caption = captionTmp
+				}
+			}
+			return SendMessage(reciverId, m, tele.ModeHTML)
 		}
 		if len(msg.Video.FileURL) > 0 && strings.HasPrefix(msg.Video.FileURL, "http") {
-			mm := new(tele.Video)
-			mm.File = tele.FromURL(msg.Video.FileURL)
+			m := new(tele.Video)
+			m.File = tele.FromURL(msg.Video.FileURL)
 			if len(msg.Video.Caption) > 0 {
-				mm.Caption = msg.Video.Caption
+				m.Caption = msg.Video.Caption
 			} else if len(msg.Text.Content) > 0 {
-				mm.Caption = msg.Text.Content
+				m.Caption = msg.Text.Content
 			}
-			return SendMessage(reciverId, mm)
+			if len(m.Caption) > 0 {
+				if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+				} else {
+					m.Caption = captionTmp
+				}
+			}
+			return SendMessage(reciverId, m, tele.ModeHTML)
 		}
 		if len(msg.Text.Content) > 0 {
-			mm := msg.Text.Content
-			return SendMessage(reciverId, mm)
+			m := msg.Text.Content
+			return SendMessage(reciverId, m)
 		}
 		return nil
 	default:
@@ -189,12 +213,12 @@ func init() {
 	features.Handle(bot)
 }
 
-func SendMessage(reciverId int64, m interface{}) error {
+func SendMessage(reciverId int64, m interface{}, opts ...interface{}) error {
 	reciver := &tele.User{
 		ID: reciverId, //int64(reciverId),
 	}
 
-	if _, err := bot.Send(reciver, m); err != nil {
+	if _, err := bot.Send(reciver, m, opts); err != nil {
 		log.Printf("Send(%d,%v) Msg Error: %v", reciverId, m, err)
 		return errors.New("send message failed,")
 	}
