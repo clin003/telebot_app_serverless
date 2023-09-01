@@ -114,12 +114,7 @@ func pushMsgDataToTelegram(botToken string, msg FeedRichMsgModel) error {
 	// reciverId := msg.FeedChatId
 	var reciverId int64
 	reciverIdStr := os.Getenv("BAICAI_BOT_TELEGRAM_WSPUSH_FEED_CHAT_ID_" + botToken)
-	if id, err := strconv.ParseInt(reciverIdStr, 10, 64); err != nil {
-		// if msg.FeedChatId != 0 {
-		// 	reciverId = msg.FeedChatId
-		// } else {
-		// 	return err
-		// }
+	if id, err := strconv.ParseInt(reciverIdStr, 10, 64); err != nil {		
 		return err
 	} else {
 		if id != 0 {
