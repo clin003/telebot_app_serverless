@@ -10,5 +10,6 @@ import (
 
 	_ "github.com/clin003/tgbot_app_dev/features/autoreply"
 
+	_ "github.com/clin003/tgbot_app_dev/features/info"
 	_ "github.com/clin003/tgbot_app_dev/features/zhcn"
 )
